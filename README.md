@@ -1,7 +1,3 @@
-# Bookmarks
-A bookmark website
+# Webpin
 
-## ideas
-* organise bookmarks into categories
-* links are buttons/emoji's instead of string
-* add reminders app
+Save things for later.
