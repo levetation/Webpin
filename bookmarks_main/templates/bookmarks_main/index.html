@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Webpin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/9fe3012a5e.js" crossorigin="anonymous"></script>
-    <!-- {% load static %}
-    <link rel="shortcut icon" type="image/png" href="{% static '..\..\static\bookmarks_main\webpin-logo.png' %}"> -->
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-sm bg-white mb-3 shadow-sm">
-      <div class="container">
-            {% if user.is_authenticated %}
-            <a class="navbar-brand fw-bold fs-3" style="color: #264461" href="{% url 'home-page' %}">
-                Webpin
-                <i class="fa-solid fa-thumbtack" style="animation: none;" onmouseover="this.style.animation='fa-bounce 0.75s infinite';" onmouseout="this.style.animation='none';"></i>
-            </a>
-            {% else %}
-            <a class="navbar-brand fw-bold fs-3" style="color: #264461" href="{% url 'login' %}">
-                Webpin
-                <i class="fa-solid fa-thumbtack" style="animation: none;" onmouseover="this.style.animation='fa-bounce 0.75s infinite';" onmouseout="this.style.animation='none';"></i>
-            </a>
-            {% endif %}
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'home-page' %}" style="color: #264461">Home</a>
-              </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'user_profile' %}" style="color: #264461">Account</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}" style="color: #264461">Logout</a>
-                </li>
-              {% else %}
+{% extends './template.html' %}
 
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'register_user' %}" style="color: #264461">Register</a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}" style="color: #264461">Login</a>
-                </li>
-              {% endif %}
-            </ul>
-      </div>
-    </nav>
-
-    <!-- MAIN -->
-    <main class="m-3 min-vh-100">
+{% block content %}
 
     {% if messages %}
         {% for message in messages %}
@@ -81,7 +28,7 @@
                 {% csrf_token %}
                 <div class="row">
                 <button class="btn mt-3 rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Add Bookmark
+                    Add bookmark
                 </button>
 
                     <div class="collapse bg-white p-2 mt-3 border shadow-sm rounded-3" id="collapseExample">
@@ -124,7 +71,7 @@
                     <input class="btn me-3 fw-bold" type="submit" name="select_catagory" value="View" style="color: #264461;">
                     <form method="post">
                     {% csrf_token %}
-                    <input class="btn fw-bold" type="submit" name="view_all" value="View All" style="color: #264461;">
+                    <input class="btn fw-bold" type="submit" name="view_all" value="View all" style="color: #264461;">
 
                     </p>
                 </form>
@@ -132,18 +79,10 @@
             </form>
 
             <!-- delete all bookmarks -->
-            <!-- {% if all_user_bookmarks_list %}
-            <form method="post">
-              {% csrf_token %}
-              <div class="row mt-3">
-                <input class="btn btn-outline-danger fw-bold" type="submit" name="delete_all_bookmarks" value="Delete All">
-              </div>
-            </form>
-            {% endif %} -->
 
             {% if all_user_bookmarks_list %}
               <div class="row mt-3">
-                <button class="btn btn-outline-danger fw-bold rounded-3 shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#DeleteAllBookmarksModal">Delete all</button>
+                <button class="btn fw-bold rounded-3 shadow-sm border text-danger" type="button" data-bs-toggle="modal" data-bs-target="#DeleteAllBookmarksModal">Delete all</button>
                 <!-- <i class="fa-solid fa-trash-can"></i> -->
               </div>
 
@@ -225,36 +164,4 @@
         <p class="text-danger">You must be logged in to see this content</p>
     {% endif %}
 
-    </main>
-
-    <footer style="width: 100%; bottom: 0;">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item">
-          <a class="nav-link" style="color: #264461" href="{% url 'home-main' %}">Welcome</a>
-        </li>
-      {% if user.is_authenticated %}
-        <!-- <li class="nav-item">
-          <a class="nav-link" style="color: #264461" href="{% url 'home-page' %}">Bookmarks</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home-page' %}" style="color: #264461">Webpins</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}" style="color: #264461">Logout</a>
-        </li>
-      {% else %}
-        <!-- <li class="nav-item">
-          <a class="nav-link" style="color: #264461" href="{% url 'login' %}">Bookmarks</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register_user' %}" style="color: #264461">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}" style="color: #264461">Login</a>
-        </li>
-      {% endif %}
-      </ul>
-      <p class="text-center text-muted">© 2023 Bookmarks</p>
-    </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+{% endblock %}

@@ -2,16 +2,26 @@
 
 {% block content %}
 
-<div class="container mt-3 pt-3">
-	<div class="row p-3" style="margin-top: 10%;">
-		<div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3" style="margin-bottom: 20px;">
+<style>
+
+@media screen and (min-width: 992px) {
+#main-row {
+	margin-top: 10%;
+}
+}
+
+</style>
+
+<div class="container">
+	<div class="row p-3" id="main-row">
+		<div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3">
 			{% load static %}
 			<img src="{% static '/bookmarks_main/undraw_pin.png' %}" alt="undraw_pin" height="100%" width="100%">
 		</div>
 		<div class="col-lg-6 col-sm-12 text-center d-flex align-items-center order-lg-1">
 			<div class="row">
 				<h1 class="text-start fw-bold fs-1" style="color: #264461">Save things for later.</h1>
-				<p class="text-start mt-3 fs-5">Instead of sending yourself links, save interesting <br>content to your personal web archive.</p>
+				<p class="text-start fs-5">Instead of sending yourself links, save interesting <br>content to your personal web archive.</p>
 				<div class="d-flex justify-content-start">
 					<a class="mt-3 p-2 btn btn-sm rounded-3 shadow-sm col-lg-3 col-sm-3 fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Get Started!</a>
 				</div>

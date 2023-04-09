@@ -34,9 +34,12 @@ dev = False
 if dev == False:
     DEBUG = False
     ALLOWED_HOSTS = ["louieleverett.eu.pythonanywhere.com"]
+    # ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = True
     ALLOWED_HOSTS = []
+    # ALLOWED_HOSTS = ["*"]
+
 
 # Application definition
 
