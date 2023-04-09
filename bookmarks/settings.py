@@ -29,7 +29,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 STATIC_URL = 'static/'
 
-dev = True
+dev = False
 
 if dev == False:
     DEBUG = False
@@ -127,7 +127,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/louieleverett/Webpin/bookmarks_main/static/bookmarks_main'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
