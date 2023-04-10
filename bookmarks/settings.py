@@ -33,7 +33,7 @@ dev = False
 
 if dev == False:
     DEBUG = False
-    ALLOWED_HOSTS = ["louieleverett.eu.pythonanywhere.com"]
+    ALLOWED_HOSTS = ["www.webpin.co.uk", "webpin.co.uk"]
     # ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = True
