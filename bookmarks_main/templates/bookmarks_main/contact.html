@@ -1,0 +1,62 @@
+{% extends './template.html' %}
+
+{% block content %}
+
+<style>
+
+    @media screen and (min-width: 992px) {
+        #main-row {
+            margin-top: 10%;
+        }
+        #text-content{
+            margin-top: 10%;
+        }
+    }
+    
+    </style>
+
+<div class="container mt-3">
+	<div class="row" id="main-row">
+        <div class="col-lg-6 col-sm-12 text-start order-lg-2" id="text-content">
+            <h1 style="color: #264461">Get in touch.</h1>
+            <h4 class="text-muted">Please drop us a line, we're all ears!</h4>
+            <p>If you've had any issues with your account, discovered a bug, or simply want to say hello, we'd love to hear from you.</p>
+            <input type="hidden" value="webpin-site.outlook.com" id="myInput">
+            <p>
+                <a href="mailto: webpin-site.outlook.com" class="fs-5">webpin-site.outlook.com</a>
+                <button class="btn shadow-sm border" onclick="copyText()"><i class="fa-regular fa-copy" style="color: #264461"></i></button>
+            </p>
+            <p class="text-success" id="message"></p>
+        </div>
+        <div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3">
+			{% load static %}
+			<img src="{% static '/bookmarks_main/undraw_Mailbox_re_dvds.png' %}" alt="undraw_pin" height="100%" width="100%">
+		</div>
+	</div>
+</div>
+
+<!-- <script>
+    function copyText() {
+      /* Copy text into clipboard */
+      navigator.clipboard.writeText
+          ("webpin-site.outlook.com");
+    alert("Email Copied");
+  }
+</script> -->
+
+<script>
+    function copyText() {
+        /* Copy text into clipboard */
+        navigator.clipboard.writeText("webpin-site.outlook.com")
+        .then(() => {
+            /* Update message element with success text */
+            document.getElementById("message").textContent = "Email copied to clipboard";
+        })
+        .catch((error) => {
+            /* Handle errors */
+            console.error("Error copying text: ", error);
+        });
+    }
+</script>
+
+{% endblock %}

@@ -32,9 +32,13 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'home-page' %}" style="color: #264461">Webpins</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}" style="color: #264461">Contact us</a>
+              </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'user_profile' %}" style="color: #264461">Account</a>
                 </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'logout' %}" style="color: #264461">Logout</a>
                 </li>
@@ -46,6 +50,10 @@
 
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'login' %}" style="color: #264461">Login</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contact' %}" style="color: #264461">Contact us</a>
                 </li>
               {% endif %}
             </ul>

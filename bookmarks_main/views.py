@@ -126,3 +126,6 @@ def edit_bookmark(request, id):
 
 def home(request):
     return render(request, 'bookmarks_main/welcome.html', {})
+
+def contact(request):
+    return render(request, 'bookmarks_main/contact.html', {})

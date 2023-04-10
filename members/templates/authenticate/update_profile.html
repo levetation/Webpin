@@ -4,40 +4,39 @@
 
 {% if user.is_authenticated %}
 
-    {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            There was an error with your form. Perhaps try a better passsword.
+
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center fw-bold mb-3" style="color: #264461">Update Profile</h1>
+            <h4 class="text-muted d-flex justify-content-center">You're in control of your profile!</h4>
+            <p class="text-center d-flex justify-content-center">To make changes, select the credential you want to update and click "Update profile". <br> Need to update your password? You can do that here as well.</p>
+            {% if form.errors %}
+                <div class="d-flex justify-content-center alert alert-danger" role="alert">
+                    <ul>
+                        <li>Your password can’t be too similar to your other personal information.</li>
+                        <li>Your password must contain at least 8 characters.</li>
+                        <li>Your password can’t be a commonly used password.</li>
+                        <li>Your password can’t be entirely numeric.</li>
+                    </ul>
+                </div>
+            {% endif %}   
         </div>
-    {% endif %}
-        <div class="container">
-            <div class="row">
-                <h1 class="text-center fw-bold mb-3" style="color: #264461">Update Profile</h1>
-            </div>
-            <div class="row d-flex justify-content-center">
-                <div class="col-lg-6 col-sm-12">
-                    <form action="{% url 'update_profile' %}" method=POST>
-                        {% csrf_token %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 col-sm-12">
+                <form action="{% url 'update_profile' %}" method=POST>
+                    {% csrf_token %}
 
-                        {{ form.as_p }}
-
-                    <div class="mt-3">
-                        <ul>
-                            <li>Your password can’t be too similar to your other personal information.</li>
-                            <li>Your password must contain at least 8 characters.</li>
-                            <li>Your password can’t be a commonly used password.</li>
-                            <li>Your password can’t be entirely numeric.</li>
-                        </ul>
-                        <div class="col d-flex justify-content-center">
-                            <input type="submit" value="Update profile" class="btn rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;">
-                        </div>
+                    {{ form.as_p }}
+                    <div class="col d-flex justify-content-center">
+                        <input type="submit" value="Update profile" class="btn rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;">
                     </div>
-                    </form>
-                </div>
-                <div class="col-12 container text-center">
-                    <a href="{% url 'user_profile' %}" class="btn btn-white border mt-3">Back</a>
-                </div>
+                </form>
+            </div>
+            <div class="col-12 container text-center">
+                <a href="{% url 'user_profile' %}" class="btn btn-white border mt-3">Back</a>
             </div>
         </div>
+    </div>
     {% else %}
         <p class="text-danger">You must be logged in to see this content</p>
     {% endif %}
