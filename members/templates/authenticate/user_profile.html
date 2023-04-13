@@ -5,7 +5,7 @@
 <style>
 @media screen and (min-width: 992px) {
     #main-row {
-        margin-top: 10%;
+        margin-top: 5%;
     }
     #text-content{
         margin-top: 10%;
@@ -14,14 +14,14 @@
 </style>
 
 <div class="container mt-3">
-	<div class="row" id="main-row">
+	<div class="row pb-3" id="main-row">
         <div class="col-lg-6 col-sm-12 text-start order-lg-2 mb-3" id="text-content">
             <h1 style="color: #264461">Your details.</h1>
             <h4 class="text-muted">Feel free to make any changes!</h4>
         
             <!-- User details -->
-            <p class="fw-bold fs-5 mt-3 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Username:</span> {{user_object.username}}</p>
-            <p class="fw-bold fs-5 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Email:</span> {{user_object.email}}</p>
+            <p class="fw-bold fs-6 mt-3 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Username:</span> {{user_object.username}}</p>
+            <p class="fw-bold fs-6 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Email:</span> {{user_object.email}}</p>
             <a href="{% url 'update_profile' %}" class="btn text-center rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color: white;"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
             <div>
                 <a href="{% url 'home-page' %}" class="btn btn-white border mt-3 rounded-3 shadow-sm">Back</a>
