@@ -9,8 +9,6 @@ class RegisterUserForm(UserCreationForm):
 	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter a password'}), label='')
 	password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Please re-enter your password', 'data-toggle': 'password'}), label='')
 
-
-
 	class Meta:
 		model = User
 		fields = ('username', 'email', 'password1', 'password2')

@@ -1,0 +1,62 @@
+{% extends 'bookmarks_main/template.html' %}
+
+{% block content %}
+
+{% if form.errors %}
+	<div class="alert alert-danger" role="alert">
+		There was an error with your form...
+		<ul>
+			<li>Your password can’t be too similar to your other personal information.</li>
+			<li>Your password must contain at least 8 characters.</li>
+			<li>Your password can’t be a commonly used password.</li>
+			<li>Your password can’t be entirely numeric.</li>
+		</ul>
+    </div>
+{% endif %}
+
+	<div class="container">
+		<div class="row">
+			<h1 class="text-center fw-bold mb-3" style="color: #264461">Register</h1>
+		</div>
+		<div class="row d-flex justify-content-center">
+			<div class="col-lg-6 col-sm-12">
+				<form action="{% url 'register_user' %}" method=POST>
+					{% csrf_token %}
+
+					{{ form.as_p }}
+
+				<div class="mt-3">
+					<div class="col d-flex justify-content-center">
+						<input type="submit" value="Submit" class="btn rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;">
+					</div>
+				</div>
+				</form>
+			</div>
+			<div class="col-12 text-center mt-3">
+				<p>Already have an account?</p>
+				<a href="{% url 'login' %}">Login</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- <h1 class="text-center fw-bold" style="color: #264461">Register</h1>
+	<div class="row">
+		<div class="col-12 d-flex justify-content-center">
+			<form action="{% url 'register_user' %}" method=POST>
+				{% csrf_token %}
+
+				{{ form.as_p }}
+
+			  <div class="d-flex justify-content-center mt-3">
+			  	<input type="submit" value="Submit" class="btn" style="background-color: #264461; color:white;">
+			  </div>
+			</form>
+		</div>
+		<div class="col-12 text-center mt-3">
+			<p>Already have an account?</p>
+			<a href="{% url 'login' %}">Login</a>
+		</div>
+	</div> -->
+
+
+{% endblock %}
