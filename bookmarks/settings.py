@@ -29,7 +29,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 STATIC_URL = 'static/'
 
-dev = True
+dev = False
 
 if dev == False:
     DEBUG = False
