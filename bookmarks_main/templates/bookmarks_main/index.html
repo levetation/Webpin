@@ -124,7 +124,7 @@
         {% if bookmark_exist %}
             <div class="col-lg-3 col-md-6 order-lg-1 order-md-1 ms-3 me-3">
                 {% if user.is_authenticated %}
-                    {% for bookmark, favicon_url in bookmarks %}
+                    {% for bookmark in bookmarks %}
                         <form method="post">
                             {% csrf_token %}
                                 <a href="{{bookmark.bookmark_address}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #264461">
@@ -132,10 +132,29 @@
 
                                         <div class="row mt-3">
                                             <div class="col-auto">
-                                                <img class="img-thumbnail me-1" src="{{favicon_url}}" alt="" height="100%" width="30px">
+                                                <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px">
                                                 <span class="align-middle fw-bold">{{bookmark.bookmark_title}}</span>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                // Replace the URLs with your desired placeholder and error images
+                                                var placeholderImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
+                                                var errorImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
+                                                
+                                                $('img').each(function() {
+                                                    var img = $(this);
+                                                    var url = img.attr('src');
+                                                    img.attr('src', placeholderImageUrl);
+                                                    $.get(url, function(data) {
+                                                        img.attr('src', url);
+                                                    }).fail(function() {
+                                                        img.attr('src', errorImageUrl);
+                                                    });
+                                                });
+                                            });
+                                            </script>
 
                                         {% if bookmark.bookmark_notes %}
                                         <div class="row">
@@ -159,6 +178,7 @@
         {% endif %}
         {% endif %}
     </div>
+        
 
     {% else %}
         <p class="text-danger">You must be logged in to see this content</p>

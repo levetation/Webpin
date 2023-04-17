@@ -2,9 +2,42 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_
 from .models import Saved_Bookmarks
 from django.contrib.auth.models import User
 from django.contrib import messages
-import requests, time
 
-## Get favicon from any url
+## favicon imports
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse, urljoin
+import requests
+
+from django.http import HttpResponse
+
+## ChatGPT favicon function
+def get_favicon_url(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    favicon_url = None
+    for link in soup.find_all('link'):
+        if link.get('rel') == ['shortcut', 'icon'] or link.get('rel') == ['icon']:
+            favicon_url = link.get('href')
+            break
+    if favicon_url:
+        parsed_favicon_url = urlparse(favicon_url)
+        if not parsed_favicon_url.scheme:
+            parsed_url = urlparse(url)
+            base_url = parsed_url.scheme + "://" + parsed_url.netloc
+            favicon_url = urljoin(base_url, favicon_url)
+    return favicon_url
+
+## ChatGPT view
+def get_favicon(request):
+    url = request.GET.get('url')
+    favicon_url = get_favicon_url(url)
+    if favicon_url:
+        response = requests.get(favicon_url)
+        return HttpResponse(response.content, content_type=response.headers['Content-Type'])
+    else:
+        return HttpResponse(status=404)
+
+## Legacy favicon URL grabber
 def favicon_url(url):
     url_list = url.split('/')
     if len(url_list) >= 1:
@@ -16,10 +49,8 @@ def userhome(request):
     context = {}
 
     # gets bookmarks
-    start = time.time()
     bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id).order_by('-bookmark_save_date')
-    end = time.time()
-    print("Bookmark load time:", end-start)
+
     ## delete all bookmarks
     all_user_bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id)
 
@@ -30,30 +61,8 @@ def userhome(request):
     if request.method == 'POST' and 'delete_all_bookmarks' in request.POST:
         all_user_bookmarks.delete()
         return redirect(request.META['HTTP_REFERER'])
-
-
-    # favicon url list
-
-    start = time.time()
-    favicon_urls = []
-    default_address = 'https://www.webpin.co.uk/static/bookmarks_main/webpin_pin.PNG'
-    for bookmark in bookmarks:
-        if bookmark.bookmark_address:
-            fav_url = favicon_url(bookmark.bookmark_address)
-            response = requests.head(fav_url)
-            if response.status_code != 200:
-                favicon_urls.append(default_address)
-            else:
-                favicon_urls.append(fav_url)
-        else:
-            favicon_urls.append(default_address)
-
-    end = time.time()
-    print('Favicon load time:', end-start)
-
-    bookmarks_and_urls = zip(bookmarks, favicon_urls)
-
-    context['bookmarks'] = bookmarks_and_urls
+ 
+    context['bookmarks'] = bookmarks
 
     if bookmarks.exists():
         context['bookmark_exist'] = 'User has bookmarks'
@@ -68,10 +77,8 @@ def userhome(request):
             bookmark_catagory=request.POST['selected_bookmark_catagory'],
             author=request.user.id
         ).order_by('-bookmark_save_date')
-
-        favicon_urls = [favicon_url(bookmark.bookmark_address) for bookmark in bookmarks]
-        bookmarks_and_urls = zip(bookmarks, favicon_urls)
-        context['bookmarks'] = bookmarks_and_urls
+        
+        context['bookmarks'] = bookmarks
         return render(request, 'bookmarks_main/index.html', context)
 
     elif request.method =='POST' and 'view_all' in request.POST:
@@ -96,20 +103,15 @@ def userhome(request):
         # return HttpResponseRedirect('')
         return redirect(request.META['HTTP_REFERER'])
 
-
-
     return render(request, 'bookmarks_main/index.html', context)
 
-
 ## delete bookmark
-
 def delete_bookmark(request, id):
     bookmark_checked = Saved_Bookmarks.objects.get(pk=id)
     bookmark_checked.delete()
     return redirect('home-page')
 
 ## edit bookmark
-
 def edit_bookmark(request, id):
     bookmark_to_edit = Saved_Bookmarks.objects.get(pk=id)
 
@@ -128,7 +130,6 @@ def edit_bookmark(request, id):
             )
 
         messages.success(request, ("Bookmark updated"))
-
         return redirect(request.META['HTTP_REFERER'])
 
     elif request.method == 'POST' and 'delete_selected_bookmark' in request.POST:
@@ -136,7 +137,6 @@ def edit_bookmark(request, id):
         bookmark_to_edit.delete()
 
         return redirect('home-page')
-
 
     return render(request, 'bookmarks_main/edit.html', {'bookmark_to_edit':bookmark_to_edit})
 
