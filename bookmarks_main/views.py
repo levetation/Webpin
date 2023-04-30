@@ -145,3 +145,6 @@ def home(request):
 
 def contact(request):
     return render(request, 'bookmarks_main/contact.html', {})
+
+def devblog(request):
+    return render(request, 'bookmarks_main/devblog.html', {})

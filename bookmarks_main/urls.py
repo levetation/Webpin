@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit_bookmark/<str:id>', views.edit_bookmark, name='edit-bookmark'),
     path('contact', views.contact, name='contact'),
     path('get_favicon', views.get_favicon, name='get_favicon'),
+    path('blog', views.devblog, name='devblog'),
 ]

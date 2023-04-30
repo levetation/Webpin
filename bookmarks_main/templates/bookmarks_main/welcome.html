@@ -5,57 +5,167 @@
 <style>
 
 @media screen and (min-width: 992px) {
-#main-row {
-	margin-top: 0%;
+	#quote-area{
+		margin-top: 100px;
+	}
 }
+
+@media (min-width:992px) and (max-width:1200px) {
+	#quote-images{
+		height: 500px;
+	}
+	#quote-area{
+		margin-top: 200px;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+#quote-images{
+	height: 500px;
+}
+#quote-area{
+	margin-top: 200px;
+}
+}
+
+.quotes {display: none;}
+
+.images {display: none;}
+
+#cards{
+	height: 180px;
 }
 
 </style>
 
+
 <div class="container">
-	<!-- ROW 0 -->
-	<div class="row px-3 pb-3 border-bottom " id="main-row">
+	<!-- Hero Row -->
+	<div class="row px-3 pb-3 border-bottom" id="main-row">
 		<div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3">
 			{% load static %}
-			<img src="{% static '/bookmarks_main/undraw_pin.png' %}" alt="undraw_pin" height="100%" width="100%">
+			<img class="p-3" src="{% static '/bookmarks_main/undraw_bookmarks_re_mq1u.svg' %}" id="quote-images" alt="undraw pin" width="100%">
 		</div>
-		<div class="col-lg-6 col-sm-12 text-center d-flex align-items-center order-lg-1">
-			<div class="row">
-				<h1 class="text-start fw-bold fs-1" style="color: #264461">Save things for later.</h1>
-				<p class="text-start fs-5">Instead of sending yourself links, save interesting <br>content to your personal web archive.</p>
-				<div class="d-flex justify-content-start">
-					<a class="mt-1 p-2 btn btn-sm rounded-3 shadow-sm col-lg-3 col-sm-3 fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Get Started!</a>
-				</div>
+		<div class="col-lg-6 col-sm-12 text-center order-lg-1">
+			<div class="row" id="quote-area">
+					<h1 class="text-start fw-bold fs-1" style="color: #264461">Save things for later.</h1>
+					<p class="text-start fs-5">Instead of sending yourself links, save interesting content to your personal web archive.</p>
+				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Get Started</a>
 			</div>
 		</div>
 	</div>
-	<!-- ROW 1 -->
-	<div class="row px-3 pb-3 border-bottom">
+
+	<!-- Blog Row -->
+	<div class="row py-3 my-3 border-bottom" id="main-row">
+		<!-- development blog card -->
+		<div class="col-lg-6 col-sm-12">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+			  <div class="col p-4 d-flex flex-column position-static">
+				<h3 class="mb-0" style="color: #264461">Dev blog</h3>
+				<div class="mb-1 text-muted">May 12</div>
+				<p class="mb-auto">Where did Webpin come from and how is it made?</p>
+				<a href="{% url 'devblog' %}" class="stretched-link" style="color: rgb(151,205,112); text-decoration: none;">Continue reading</a>
+			  </div>
+			  <div class="col-auto d-none d-lg-block text-center">
+				{% load static %}
+				<img class="p-3 mt-3" src="{% static '/bookmarks_main/undraw_mobile_development_re_wwsn.svg' %}" alt="person coding" width="180px">
+			  </div>
+			</div>
+		</div>
+		<!-- Twitter card -->
+		<div class="col-lg-6 col-sm-12">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+			  <div class="col p-4 d-flex flex-column position-static">
+				<h3 class="mb-0" style="color: #264461">Twitter</h3>
+				<div class="mb-1 text-muted">Latest updates</div>
+				<p class="mb-auto">Check out our Twitter for everything Webpin related.</p>
+				<a href="https://twitter.com/WebpinUK" class="stretched-link" style="color: rgb(151,205,112); text-decoration: none;">Continue to @WebpinUK</a>
+			  </div>
+			  <div class="col-auto d-none d-lg-block text-center">
+				{% load static %}
+				<img class="p-3 mt-3" src="{% static '/bookmarks_main/logo_of_Twitter.svg' %}" alt="logo of twitter" width="180px">
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Hero statements -->
+
+	<div class="row px-3 pb-3 border-bottom" id="main-row">
 		<div class="col-lg-6 col-sm-12 text-center order-lg-1 mb-3">
 			{% load static %}
-			<img src="{% static '/bookmarks_main/undraw_mobile_devices.png' %}" alt="undraw_pin" height="100%" width="100%">
+			<img class="p-3" src="{% static '/bookmarks_main/undraw_online_re_x00h.svg' %}" id="quote-images" alt="undraw pin" width="100%">
 		</div>
-		<div class="col-lg-6 col-sm-12 text-center d-flex align-items-center order-lg-2">
-			<div class="row">
-				<h1 class="text-end fw-bold fs-1" style="color: #264461">Read anywhere.</h1>
-				<p class="text-end fs-5">Revisit your bookmarks any time, anywhere.</p>
+		<div class="col-lg-6 col-sm-12 text-center order-lg-2">
+			<div class="row" id="quote-area">
+					<h1 class="text-start fw-bold fs-1" style="color: #264461">Read anywhere.</h1>
+					<p class="text-start fs-5">Revisit your bookmarks any time, anywhere.</p>
+				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Read now</a>
 			</div>
 		</div>
 	</div>
-	<!-- ROW 2 -->
-	<div class="row px-3 pb-3" id="main-row">
+
+	<div class="row px-3 pb-3 my-3" id="main-row">
 		<div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3">
 			{% load static %}
-			<img src="{% static '/bookmarks_main/undraw_Note_list.png' %}" alt="undraw_pin" height="100%" width="100%">
+			<img class="p-3" src="{% static '/bookmarks_main/undraw_note_list_re_r4u9.svg' %}" id="quote-images" alt="undraw pin" width="100%">
 		</div>
-		<div class="col-lg-6 col-sm-12 text-center d-flex align-items-center order-lg-1">
-			<div class="row">
-				<h1 class="text-start fw-bold fs-1" style="color: #264461">Organise your content.</h1>
-				<p class="text-start fs-5">Organize your content effortlessly and browse it by categories!</p>
+		<div class="col-lg-6 col-sm-12 text-center order-lg-1">
+			<div class="row" id="quote-area">
+					<h1 class="text-start fw-bold fs-1" style="color: #264461">Organise your content.</h1>
+					<p class="text-start fs-5">Organize your content effortlessly and browse it by categories!</p>
+				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Organise now</a>
 			</div>
 		</div>
 	</div>
+
+	
+
 </div>
 
+<!-- Images for the bottom -->
+<!-- <div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3 images">
+	{% load static %}
+	<img class="p-3" src="{% static '/bookmarks_main/undraw_online_re_x00h.svg' %}" id="quote-images" alt="undraw_pin" width="90%">
+</div>
+
+<div class="col-lg-6 col-sm-12 text-center order-lg-2 mb-3 images">
+	{% load static %}
+	<img class="p-3" src="{% static '/bookmarks_main/undraw_note_list_re_r4u9.svg' %}" id="quote-images" alt="undraw_pin" width="90%">
+</div> -->
+
+<script>
+
+	var dt = 0;
+	
+	// text transition
+	var quotes = $(".quotes");
+	var quoteIndex = -1;
+	
+	function showNextQuote() {
+	  ++quoteIndex;
+	  quotes.eq(quoteIndex % quotes.length)
+		.fadeIn(1000)
+		.delay(dt)
+		.fadeOut(1000, showNextQuote);
+	}
+	
+	showNextQuote();
+	
+	// image transition
+	var images = $(".images");
+	var imageIndex = -1;
+	
+	function showNextImage() {
+	  ++imageIndex;
+	  images.eq(imageIndex % images.length)
+		.fadeIn(1000)
+		.delay(dt)
+		.fadeOut(1000, showNextImage);
+	}
+	
+	showNextImage();
+	
+	</script>
 
 {% endblock %}
