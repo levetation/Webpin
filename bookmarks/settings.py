@@ -25,11 +25,13 @@ SECRET_KEY = 'django-insecure-ik70_70nxqyrr#a9%cb))x_9m0u4vb1x@wymlo)2h_+2$2dn2+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+LOGIN_URL = '/members/login_user'
 
 STATIC_URL = 'static/'
 
-dev = False
+dev = True
 
 if dev == False:
     DEBUG = False

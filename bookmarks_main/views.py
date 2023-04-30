@@ -3,6 +3,10 @@ from .models import Saved_Bookmarks
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+from django.contrib.auth.decorators import login_required
+
+from members import views
+
 ## favicon imports
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
@@ -44,7 +48,7 @@ def favicon_url(url):
         fav_url = f"{url_list[0]}//{url_list[2]}/favicon.ico"
         return fav_url
 
-# Create your views here.
+@login_required(login_url="/members/login_user")
 def userhome(request):
     context = {}
 
@@ -106,12 +110,14 @@ def userhome(request):
     return render(request, 'bookmarks_main/index.html', context)
 
 ## delete bookmark
+@login_required(login_url="/members/login_user")
 def delete_bookmark(request, id):
     bookmark_checked = Saved_Bookmarks.objects.get(pk=id)
     bookmark_checked.delete()
     return redirect('home-page')
 
 ## edit bookmark
+@login_required(login_url="/members/login_user")
 def edit_bookmark(request, id):
     bookmark_to_edit = Saved_Bookmarks.objects.get(pk=id)
 

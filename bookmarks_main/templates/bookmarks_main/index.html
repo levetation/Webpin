@@ -12,6 +12,12 @@
 
     {% if user.is_authenticated %}
 
+    <div class="row d-flex justify-content-end">
+        <div class="col-1 me-2">
+            <h2 class="p-1 rounded border shadow-sm" style="background-color: white; position:fixed; bottom: 0;"><a href="#anchor" style="color:#264461;"><i class="fa-solid fa-house"></i></a></h2>
+        </div>
+    </div>
+    
     <div class="row mb-3 d-flex justify-content-center">
 
         <div class="row">
@@ -24,7 +30,7 @@
         <div class="col-lg-3 col-md-6 order-lg-2">
 
             <!-- Add bookmark -->
-            <form method="post">
+            <form method="post" id="anchor">
                 {% csrf_token %}
                 <div class="row">
                 <button class="btn mt-3 rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
