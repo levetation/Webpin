@@ -1,21 +1,28 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Saved_Bookmarks
-from django.contrib.auth.models import User
 from django.contrib import messages
-
 from django.contrib.auth.decorators import login_required
-
-from members import views
 
 ## favicon imports
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 import requests
-
 from django.http import HttpResponse
+from django.core.cache import cache
+
 
 ## ChatGPT favicon function
 def get_favicon_url(url):
+
+    # creates cache key
+    cache_key = f'favicon_{url}'
+
+    # checks for url in cache
+    favicon_url = cache.get(cache_key)
+    if favicon_url:
+        return favicon_url
+    
+    # generates favicon from url
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     favicon_url = None
@@ -29,24 +36,30 @@ def get_favicon_url(url):
             parsed_url = urlparse(url)
             base_url = parsed_url.scheme + "://" + parsed_url.netloc
             favicon_url = urljoin(base_url, favicon_url)
+        # puts url in cache
+        cache.set(cache_key, favicon_url)
     return favicon_url
 
 ## ChatGPT view
 def get_favicon(request):
     url = request.GET.get('url')
-    favicon_url = get_favicon_url(url)
+    cache_key = f'favicon_{url}'
+    favicon_url = cache.get(cache_key)
+    if not favicon_url:
+        favicon_url = get_favicon_url(url)
     if favicon_url:
+        cache.set(cache_key, favicon_url)
         response = requests.get(favicon_url)
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse(status=404)
 
 ## Legacy favicon URL grabber
-def favicon_url(url):
-    url_list = url.split('/')
-    if len(url_list) >= 1:
-        fav_url = f"{url_list[0]}//{url_list[2]}/favicon.ico"
-        return fav_url
+# def old(url):
+#     url_list = url.split('/')
+#     if len(url_list) >= 1:
+#         fav_url = f"{url_list[0]}//{url_list[2]}/favicon.ico"
+#         return fav_url
 
 @login_required(login_url="/members/login_user")
 def userhome(request):

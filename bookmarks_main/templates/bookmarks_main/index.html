@@ -138,29 +138,28 @@
 
                                         <div class="row mt-3">
                                             <div class="col-auto">
-                                                <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px">
+                                                <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px" onerror="this.style.display='none'">
                                                 <span class="align-middle fw-bold">{{bookmark.bookmark_title}}</span>
                                             </div>
                                         </div>
 
                                         <script>
-                                            $(document).ready(function() {
-                                                // Replace the URLs with your desired placeholder and error images
-                                                var placeholderImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
-                                                var errorImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
+                                            // $(document).ready(function() {
+                                            //     // Replace the URLs with your desired placeholder and error images
+                                            //     // var placeholderImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
+                                            //     // var errorImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
                                                 
-                                                $('img').each(function() {
-                                                    var img = $(this);
-                                                    var url = img.attr('src');
-                                                    img.attr('src', placeholderImageUrl);
-                                                    $.get(url, function(data) {
-                                                        img.attr('src', url);
-                                                    }).fail(function() {
-                                                        img.attr('src', errorImageUrl);
-                                                    });
-                                                });
-                                            });
-                                            </script>
+                                            //     $('img.saved-url').each(function() { // add saved-url class to the img element to target only favicon images
+                                            //         var img = $(this);
+                                            //         var url = img.attr('src');
+                                            //         $.get(url, function(data) {
+                                            //             img.attr('src', url);
+                                            //         }).fail(function() {
+                                            //             img.hide(); // hide the img element if the favicon image failed to load
+                                            //         });
+                                            //     });
+                                            // });
+                                        </script>
 
                                         {% if bookmark.bookmark_notes %}
                                         <div class="row">
