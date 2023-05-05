@@ -13,11 +13,11 @@
     {% if user.is_authenticated %}
 
     <div class="row d-flex justify-content-end">
-        <div class="col-1 me-2">
+        <div class="col-1 me-3">
             <h2 class="p-1 rounded border shadow-sm" style="background-color: white; position:fixed; bottom: 0;"><a href="#anchor" style="color:#264461;"><i class="fa-solid fa-house"></i></a></h2>
         </div>
     </div>
-    
+
     <div class="row mb-3 d-flex justify-content-center">
 
         <div class="row">
@@ -148,7 +148,7 @@
                                             //     // Replace the URLs with your desired placeholder and error images
                                             //     // var placeholderImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
                                             //     // var errorImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
-                                                
+
                                             //     $('img.saved-url').each(function() { // add saved-url class to the img element to target only favicon images
                                             //         var img = $(this);
                                             //         var url = img.attr('src');
@@ -183,7 +183,7 @@
         {% endif %}
         {% endif %}
     </div>
-        
+
 
     {% else %}
         <p class="text-danger">You must be logged in to see this content</p>
