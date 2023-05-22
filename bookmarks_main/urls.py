@@ -10,4 +10,5 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('get_favicon', views.get_favicon, name='get_favicon'),
     path('blog', views.devblog, name='devblog'),
+    path('settings', views.account_settings, name='account_settings'),
 ]

@@ -2,6 +2,7 @@
 
 {% block content %}
 
+    <!-- message alert -->
     {% if messages %}
         {% for message in messages %}
           <div class="alert alert-warning" role="alert">
@@ -10,183 +11,167 @@
         {% endfor %}
     {% endif %}
 
-    {% if user.is_authenticated %}
-
+    <!-- Top of page button -->
+    {% if bookmark_exist %}
     <div class="row d-flex justify-content-end">
         <div class="col-1 me-3">
             <h2 class="p-1 rounded border shadow-sm" style="background-color: white; position:fixed; bottom: 0;"><a href="#anchor" style="color:#264461;"><i class="fa-solid fa-house"></i></a></h2>
         </div>
     </div>
+    {% endif %}
 
-    <div class="row mb-3 d-flex justify-content-center">
+    <!-- **************** -->
+    <!-- *** Tool bar *** -->
+    <!-- **************** -->
 
-        <div class="row">
-            {% if bookmark_exist %}
-            {% else %}
-                <h1 class="text-center fw-bold" style="color: #264461">Add some bookmarks!</h1>
-            {% endif %}
-        </div>
+    <style>
+    @media screen and (max-width: 366px) {
+        #addbutton{width: 100%;}
+        #categorybar{
+            margin-top: 10px;
+            width: 150px;
+        }
+    }
 
-        <div class="col-lg-3 col-md-6 order-lg-2">
+    @media (max-width:992px){
+        #categorybar{
+            width: 250px;
+        }
+    }
+    
+    @media (min-width:992px) and (max-width:1200px) {
+        #categorybar{
+            width: 400px;
+        }
+    }
+    
+    @media screen and (min-width: 1200px) {
+        #categorybar{
+            width: 400px;
+        }
+    }
+    </style>
 
+    <nav class="navbar navbar-light" id="anchor">
+        <div class="container-fluid justify-content-center">
             <!-- Add bookmark -->
-            <form method="post" id="anchor">
+            <button class="btn fs-6 fw-bold me-1" id="addbutton" style="background-color: rgb(151,205,112); color: white;" width="100%" type="button" data-bs-toggle="modal" data-bs-target="#SubmitNewBookmarkModal"><i class="fa-solid fa-plus"></i></button>
+            <form method="post">
                 {% csrf_token %}
-                <div class="row">
-                <button class="btn mt-3 rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Add bookmark
-                </button>
+                <div class="modal fade" id="SubmitNewBookmarkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add a bookmark</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
 
-                    <div class="collapse bg-white p-2 mt-3 border shadow-sm rounded-3" id="collapseExample">
+                                <form method="post">
+                                    {% csrf_token %}
 
-                        <input type="text" name="new_bookmark_title" class="form-control mb-2" placeholder="Bookmark title">
+                                    <!-- inputs -->
+                                    <input type="text" name="new_bookmark_title" class="form-control mb-2 border shadow-sm" placeholder="Bookmark title">
+                                    <input type="text" name="new_bookmark_address" class="form-control mb-2 border shadow-sm" placeholder="URL link">      
+                                    <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control mb-2 border shadow-sm" placeholder="Description"></textarea>
+            
+                                    <!-- Catagorise bookmarks -->
+                                    <input name="new_bookmark_catagory" class="form-control border shadow-sm" list="datalistOptions" placeholder="Type catagory or choose from existing">
+                                    <datalist id="datalistOptions">
+                                        {% if user.is_authenticated %}
+                                            {% for catagory in catagories %}
+                                                <option value="{{catagory}}"></option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </datalist>
+            
+                                    <!-- <input type="hidden" name="author"> -->
+                                    <div class="row mt-3 d-flex justify-content-center">
+                                        <p>
+                                        <input class="btn rounded-3 shadow-sm" style="background-color: rgb(151,205,112); color:white;" type="submit" name="submit_new_bookmark" value="Submit">
+                                        <button type="button" class="btn btn-outline-secondary rounded-3 shadow-sm" data-bs-dismiss="modal">Cancel</button>
+                                        </p>
+                                    </div>
 
-                        <input type="text" name="new_bookmark_address" class="form-control mb-2" placeholder="URL link">
+                                </form>
 
-                        <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control mb-2" placeholder="Description"></textarea>
-
-                        <!-- Catagorise bookmarks -->
-                        <input name="new_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type catagory or choose from existing">
-                        <datalist id="datalistOptions">
-                            {% if user.is_authenticated %}
-                                {% for catagory in catagories %}
-                                    <option value="{{catagory}}"></option>
-                                {% endfor %}
-                            {% endif %}
-                        </datalist>
-
-                        <!-- <input type="hidden" name="author"> -->
-                        <div class="row ms-1 me-1 d-flex justify-content-center">
-                            <input class="btn mt-3 rounded-3 shadow-sm" style="background-color: #264461; color:white;" type="submit" name="submit_new_bookmark" value="Submit">
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
-
+            
             <!-- select catagory -->
             <form method="post">
                 {% csrf_token %}
-                <div class="row mt-3 p-2 bg-white shadow-sm border rounded-3">
-                    <select class="form-select" aria-label="Default select example" name="selected_bookmark_catagory" value="Select catagory">
-                        <option selected>Select catagory</option>
+                <div class="input-group" id="categorybar">
+                    <select class="form-select me-1 rounded" aria-label="Default select example" name="selected_bookmark_catagory" value="Select category">
+                        <option selected>View all</option>
+                        <!-- <option selected>Select category</option> -->
                         {% for catagory in catagories %}
                             <option value="{{catagory}}">{{catagory}}</option>
                         {% endfor %}
                     </select>
-                    <p class="text-center mt-3">
-                    <input class="btn me-3 fw-bold" type="submit" name="select_catagory" value="View" style="color: #264461;">
-                    <form method="post">
-                    {% csrf_token %}
-                    <input class="btn fw-bold" type="submit" name="view_all" value="View all" style="color: #264461;">
-
-                    </p>
-                </form>
+                    <input class="btn btn-primary rounded" style="background-color: #264461" type="submit" name="select_catagory" value="View">
                 </div>
             </form>
-
-            <!-- delete all bookmarks -->
-
-            {% if all_user_bookmarks_list %}
-              <div class="row mt-3">
-                <button class="btn fw-bold rounded-3 shadow-sm border text-danger" type="button" data-bs-toggle="modal" data-bs-target="#DeleteAllBookmarksModal">Delete all</button>
-                <!-- <i class="fa-solid fa-trash-can"></i> -->
-              </div>
-
-              <!-- Modal -->
-						  <form method="post">
-                {% csrf_token %}
-                <div class="modal fade" id="DeleteAllBookmarksModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete all your bookmarks?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                      <input class="btn btn-danger" type="submit" name="delete_all_bookmarks" value="Delete">
-                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </form>
-
-            {% endif %}
-
         </div>
-
-        <!-- load image if no bookmarks -->
-        <div class="row order-lg-3 d-flex justify-content-center">
-            {% if bookmark_exist %}
-            {% else %}
-            <div class="col-lg-6 col-sm-12 ">
-                {% load static %}
-                <img class="p-3" src="{% static 'bookmarks_main/undraw_save_to_bookmarks_re_8ajf.svg' %}" alt="undraw_pin_button" height="100%" width="90%">
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- display bookmarks -->
+    </nav>
+  
+    <!-- load no bookmarks image -->
+    <div class="row order-lg-3 d-flex justify-content-center">
         {% if bookmark_exist %}
-            <div class="col-lg-3 col-md-6 order-lg-1 order-md-1 ms-3 me-3">
-                {% if user.is_authenticated %}
-                    {% for bookmark in bookmarks %}
-                        <form method="post">
-                            {% csrf_token %}
-                                <a href="{{bookmark.bookmark_address}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #264461">
-                                    <div class="row p-1 mt-3 bg-white d-flex align-items-center shadow-sm border rounded-3">
-
-                                        <div class="row mt-3">
-                                            <div class="col-auto">
-                                                <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px" onerror="this.style.display='none'">
-                                                <span class="align-middle fw-bold">{{bookmark.bookmark_title}}</span>
-                                            </div>
-                                        </div>
-
-                                        <script>
-                                            // $(document).ready(function() {
-                                            //     // Replace the URLs with your desired placeholder and error images
-                                            //     // var placeholderImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
-                                            //     // var errorImageUrl = '../../static/bookmarks_main/webpin_pin.PNG';
-
-                                            //     $('img.saved-url').each(function() { // add saved-url class to the img element to target only favicon images
-                                            //         var img = $(this);
-                                            //         var url = img.attr('src');
-                                            //         $.get(url, function(data) {
-                                            //             img.attr('src', url);
-                                            //         }).fail(function() {
-                                            //             img.hide(); // hide the img element if the favicon image failed to load
-                                            //         });
-                                            //     });
-                                            // });
-                                        </script>
-
-                                        {% if bookmark.bookmark_notes %}
-                                        <div class="row">
-                                            <div class="col-auto text-break overflow-auto">
-                                                <span class="ms-1 mt-1" style="max-height:25px;">{{bookmark.bookmark_notes}}</span>
-                                            </div>
-                                        </div>
-                                        {% endif %}
-
-                                        <div class="row-auto">
-                                                <div class="text-end">
-                                                    <a href="{% url 'edit-bookmark' bookmark.id %}" style="color: #264461"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                </div>
-                                        </div>
-
-                                    </div>
-                                </a>
-                        </form>
-                    {% endfor %}
-            </div>
-        {% endif %}
+        {% else %}
+            {% load static %}
+            <img class="p-3 mt-3" src="{% static 'bookmarks_main/undraw_save_to_bookmarks_re_8ajf.svg' %}" alt="undraw_pin_button" style="height: 100%; width: 500px;">
         {% endif %}
     </div>
 
+    <!-- ********************* -->
+    <!-- *** Bookmark list *** -->
+    <!-- ********************* -->
 
-    {% else %}
-        <p class="text-danger">You must be logged in to see this content</p>
+    <!-- display bookmarks -->
+    {% if bookmark_exist %}
+    <div class="row mb-3 d-flex justify-content-center">
+        <div class="order-lg-1 order-md-1 ms-3 me-3" style="width: 405px;">
+                {% for bookmark in bookmarks %}
+                    <form method="post">
+                        {% csrf_token %}
+                            <a href="{{bookmark.bookmark_address}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #264461">
+                                <div class="row p-1 mt-3 bg-white d-flex align-items-center shadow-sm border rounded-3">
+
+                                    <div class="row mt-3">
+                                        <div class="col-auto">
+                                            <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px" onerror="this.style.display='none'">
+                                            <span class="align-middle fw-bold">{{bookmark.bookmark_title}}</span>
+                                        </div>
+                                    </div>
+
+                                    {% if bookmark.bookmark_notes %}
+                                    <div class="row">
+                                        <div class="col-auto text-break overflow-auto">
+                                            <span class="ms-1 mt-1" style="max-height:25px;">{{bookmark.bookmark_notes}}</span>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="row-auto">
+                                            <div class="text-end">
+                                                <a href="{% url 'edit-bookmark' bookmark.id %}" style="color: #264461"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                    </form>
+                {% endfor %}
+        </div>
+    </div>
     {% endif %}
+
+
+    
+    
 
 {% endblock %}

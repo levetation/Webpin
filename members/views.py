@@ -4,6 +4,8 @@ from django.contrib import messages
 from .forms import RegisterUserForm
 from django.contrib.auth.models import User
 
+from django.contrib.auth.decorators import login_required
+
 
 def login_user(request):
 	if request.method == "POST":
@@ -42,11 +44,13 @@ def register_user(request):
 
 	return render(request, 'authenticate/register_user.html', {'form':form,})
 
+@login_required(login_url="/members/login_user")
 def user_profile(request):
 	if request.user.is_authenticated:
 		context = {'user_object':request.user}
 	return render(request, 'authenticate/user_profile.html', context)
 
+@login_required(login_url="/members/login_user")
 def update_profile(request):
 	if request.user.is_authenticated:
 		current_user = User.objects.get(id=request.user.id)

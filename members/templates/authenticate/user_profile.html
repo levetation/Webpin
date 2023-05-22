@@ -10,6 +10,13 @@
     #text-content{
         margin-top: 10%;
     }
+
+}
+
+@media screen and (max-width: 296px) {
+    #settings_button{
+        margin-top:10px;
+    }
 }
 </style>
 
@@ -23,6 +30,7 @@
             <p class="fw-bold fs-6 mt-3 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Username:</span> {{user_object.username}}</p>
             <p class="fw-bold fs-6 text-primary border-bottom"><span class="fw-bold fs-5" style="color: #264461">Email:</span> {{user_object.email}}</p>
             <a href="{% url 'update_profile' %}" class="btn text-center rounded-3 shadow-sm fw-bold" style="background-color: rgb(151,205,112); color: white;"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
+            <a href="{% url 'account_settings' %}" class="btn btn-secondary text-center rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-gear"></i> Settings</a>
             <div>
                 <a href="{% url 'home-page' %}" class="btn btn-white border mt-3 rounded-3 shadow-sm">Back</a>
             </div>

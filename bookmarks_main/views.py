@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.core.cache import cache
 
 
-## ChatGPT favicon function
+## webscrape for favicon url
 def get_favicon_url(url):
 
     # creates cache key
@@ -40,7 +40,7 @@ def get_favicon_url(url):
         cache.set(cache_key, favicon_url)
     return favicon_url
 
-## ChatGPT view
+## Grab the favicon url for the page
 def get_favicon(request):
     url = request.GET.get('url')
     cache_key = f'favicon_{url}'
@@ -53,13 +53,6 @@ def get_favicon(request):
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse(status=404)
-
-## Legacy favicon URL grabber
-# def old(url):
-#     url_list = url.split('/')
-#     if len(url_list) >= 1:
-#         fav_url = f"{url_list[0]}//{url_list[2]}/favicon.ico"
-#         return fav_url
 
 @login_required(login_url="/members/login_user")
 def userhome(request):
@@ -90,16 +83,16 @@ def userhome(request):
     context['catagories'] = catagories
 
     if request.method =='POST' and 'select_catagory' in request.POST:
-        bookmarks = Saved_Bookmarks.objects.filter(
-            bookmark_catagory=request.POST['selected_bookmark_catagory'],
-            author=request.user.id
-        ).order_by('-bookmark_save_date')
-        
+        if request.POST['selected_bookmark_catagory'] == 'View all':
+            redirect(request.META['HTTP_REFERER'])
+        else:
+            bookmarks = Saved_Bookmarks.objects.filter(
+                bookmark_catagory=request.POST['selected_bookmark_catagory'],
+                author=request.user.id
+            ).order_by('-bookmark_save_date')
+
         context['bookmarks'] = bookmarks
         return render(request, 'bookmarks_main/index.html', context)
-
-    elif request.method =='POST' and 'view_all' in request.POST:
-        return redirect(request.META['HTTP_REFERER'])
 
     if request.method == 'POST' and 'submit_new_bookmark' in request.POST:
 
@@ -117,7 +110,6 @@ def userhome(request):
         )
 
         new_bookmark.save()
-        # return HttpResponseRedirect('')
         return redirect(request.META['HTTP_REFERER'])
 
     return render(request, 'bookmarks_main/index.html', context)
@@ -167,3 +159,23 @@ def contact(request):
 
 def devblog(request):
     return render(request, 'bookmarks_main/devblog.html', {})
+
+@login_required(login_url="/members/login_user")
+def account_settings(request):
+    context = {}
+
+    ## delete all bookmarks
+    all_user_bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id)
+
+    ## checks to display button
+    all_user_bookmarks_list = list(all_user_bookmarks)
+    # if list is > or = to 1
+    if len(all_user_bookmarks_list) >= 1: context['all_user_bookmarks_list'] = True
+
+    context['bookmarks_len'] = len(all_user_bookmarks_list)
+
+    if request.method == 'POST' and 'delete_all_bookmarks' in request.POST:
+        all_user_bookmarks.delete()
+        return redirect(request.META['HTTP_REFERER'])
+ 
+    return render(request, 'bookmarks_main/account_settings.html', context)

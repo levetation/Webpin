@@ -98,7 +98,7 @@
 		</div>
 		<div class="col-lg-6 col-sm-12 text-center order-lg-2">
 			<div class="row" id="quote-area">
-					<h1 class="text-start fw-bold fs-1" style="color: #264461">Read anywhere.</h1>
+					<h2 class="text-start fw-bold fs-1" style="color: #264461">Read anywhere.</h1>
 					<p class="text-start fs-5">Revisit your bookmarks any time, anywhere.</p>
 				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Read now</a>
 			</div>
@@ -112,9 +112,9 @@
 		</div>
 		<div class="col-lg-6 col-sm-12 text-center order-lg-1">
 			<div class="row" id="quote-area">
-					<h1 class="text-start fw-bold fs-1" style="color: #264461">Organise your content.</h1>
+					<h2 class="text-start fw-bold fs-1" style="color: #264461">Organise your content.</h1>
 					<p class="text-start fs-5">Organize your content effortlessly and browse it by categories!</p>
-				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Organise now</a>
+				<a class="col-lg-4 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Organise now</a>
 			</div>
 		</div>
 	</div>
@@ -133,39 +133,5 @@
 	{% load static %}
 	<img class="p-3" src="{% static '/bookmarks_main/undraw_note_list_re_r4u9.svg' %}" id="quote-images" alt="undraw_pin" width="90%">
 </div> -->
-
-<script>
-
-	var dt = 0;
-
-	// text transition
-	var quotes = $(".quotes");
-	var quoteIndex = -1;
-
-	function showNextQuote() {
-	  ++quoteIndex;
-	  quotes.eq(quoteIndex % quotes.length)
-		.fadeIn(1000)
-		.delay(dt)
-		.fadeOut(1000, showNextQuote);
-	}
-
-	showNextQuote();
-
-	// image transition
-	var images = $(".images");
-	var imageIndex = -1;
-
-	function showNextImage() {
-	  ++imageIndex;
-	  images.eq(imageIndex % images.length)
-		.fadeIn(1000)
-		.delay(dt)
-		.fadeOut(1000, showNextImage);
-	}
-
-	showNextImage();
-
-	</script>
 
 {% endblock %}

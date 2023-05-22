@@ -50,14 +50,14 @@
       <div class="container">
         {% if user.is_authenticated %}
         <a class="navbar-brand fw-bold fs-3" href="{% url 'home-page' %}">
-            Webpin
             <i id="jumping-pin" class="fa-solid fa-thumbtack" style="animation: none;" onmouseover="this.style.animation='fa-bounce 0.75s infinite';" onmouseout="this.style.animation='none';"></i>
-        </a>
+            Webpin.co.uk
+          </a>
         {% else %}
         <a class="navbar-brand fw-bold fs-3" href="{% url 'login' %}">
-            Webpin
             <i id="jumping-pin" class="fa-solid fa-thumbtack" style="animation: none;" onmouseover="this.style.animation='fa-bounce 0.75s infinite';" onmouseout="this.style.animation='none';"></i>
-        </a>
+            Webpin
+          </a>
         {% endif %}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
