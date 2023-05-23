@@ -1,0 +1,18 @@
+{% extends 'bookmarks_main/template.html' %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+            <p>Are you sure you want to delete your account?  This will permanently delete your
+               profile and any content you have generated.</p>
+            {{ form }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn btn-danger" name="delete_my_account" type="submit">Yes, delete my account please</button>
+        <a class="btn btn-outline-secondary"  href="{% url 'account_settings' %}">Cancel</a>
+    </div>
+</form>
+
+{% endblock %}

@@ -32,16 +32,22 @@
             <p>Number of bookmarks: <span class="fw-bold" style="color:rgb(151,205,112);">{{bookmarks_len}}</span></p>
 
             <div>
-                <button class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button">Export bookmarks</button>
+                <button class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks</button>
             </div>
+
             <div>
-                <button class="btn btn-white border mt-3 rounded-3 shadow-sm fw-bold" id="settings_button">Upload bookmarks</button>
+                <button class="btn btn-white border mt-3 rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-file-arrow-down"></i> Export bookmarks</button>
+            </div>
+
+
+            <div>
+                <h4 class="text-muted mt-3">The Danger Zone</h4>
             </div>
 
             <!-- Delete bookmarks -->
             {% if all_user_bookmarks_list %}
                 <div class="mt-3">
-                    <button class="btn fw-bold rounded-3 shadow-sm border text-danger" id="settings_button" type="button" data-bs-toggle="modal" data-bs-target="#DeleteAllBookmarksModal">Delete all bookmarks</button>
+                    <button class="btn fw-bold rounded-3 shadow-sm border text-danger" id="settings_button" type="button" data-bs-toggle="modal" data-bs-target="#DeleteAllBookmarksModal"><i class="fa-sharp fa-solid fa-trash"></i> Delete all my bookmarks</button>
                 </div>
 
                 <!-- Modal -->
@@ -62,9 +68,15 @@
                         </div>
                     </div>
                 </form>
+
             {% else %}
                 <p class="fw-bold text-danger">You don't have any bookmarks :(</p>
             {% endif %}
+
+            <div>
+                <!-- <i class="fa-solid fa-user-slash"></i> -->
+                <a href="{% url 'delete_user' %}" class="btn btn-danger border mt-3 rounded-3 shadow-sm" style="width:500px;"> Delete my account</a>
+            </div>
 
             <div>
                 <a href="{% url 'user_profile' %}" class="btn btn-white border mt-3 rounded-3 shadow-sm">Back</a>

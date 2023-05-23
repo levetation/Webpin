@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, UserDeleteForm
 from django.contrib.auth.models import User
-
 from django.contrib.auth.decorators import login_required
 
 
@@ -23,6 +22,7 @@ def login_user(request):
 	else:
 		return render(request, 'authenticate/login.html', {})
 
+@login_required
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("You were logged out"))
@@ -62,6 +62,21 @@ def update_profile(request):
 			return redirect('user_profile')
 		context = {'form':form}
 		return render(request, 'authenticate/update_profile.html', context)
+
+@login_required
+def delete_user(request):
+	if request.method == 'POST' and 'delete_my_account' in request.POST:
+		delete_user_form = UserDeleteForm(request.POST, instance=request.user)
+		user = request.user
+		user.delete()
+		messages.info(request, 'Your account has been deleted.')
+		return redirect('home-main')
+	else:
+		delete_user_form = UserDeleteForm(instance=request.user)
+
+	context = {'delete_user_form': delete_user_form}
+
+	return render(request, 'authenticate/delete_user.html', context)
 
 
 
