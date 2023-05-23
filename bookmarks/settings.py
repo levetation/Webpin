@@ -31,7 +31,7 @@ LOGIN_URL = '/members/login_user'
 
 STATIC_URL = 'static/'
 
-dev = True
+dev = False
 
 if dev == False:
     DEBUG = False
