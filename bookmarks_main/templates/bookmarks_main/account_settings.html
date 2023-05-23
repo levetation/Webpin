@@ -15,11 +15,13 @@
         width: 500px;
         color: #515b63;
     }
-    #settings_button:hover:hover {
+    #delete_user_button{
+        width: 500px;
+    }
+}
+#settings_button:hover:hover {
             color: rgb(151,205,112);
     }
-
-}
 </style>
 
 <div class="container mt-3">
@@ -32,13 +34,14 @@
             <p>Number of bookmarks: <span class="fw-bold" style="color:rgb(151,205,112);">{{bookmarks_len}}</span></p>
 
             <div>
-                <button class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks</button>
+                <button class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks (coming soon)</button>
             </div>
 
-            <div>
-                <button class="btn btn-white border mt-3 rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-file-arrow-down"></i> Export bookmarks</button>
-            </div>
-
+            {% if all_user_bookmarks_list %}
+                <div>
+                    <a href="{% url 'bookmark_download' %}" class="btn btn-white border mt-3 rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-file-arrow-down"></i> Export bookmarks</a>
+                </div>
+            {% endif %}
 
             <div>
                 <h4 class="text-muted mt-3">The Danger Zone</h4>
@@ -75,7 +78,7 @@
 
             <div>
                 <!-- <i class="fa-solid fa-user-slash"></i> -->
-                <a href="{% url 'delete_user' %}" class="btn btn-danger border mt-3 rounded-3 shadow-sm" style="width:500px;"> Delete my account</a>
+                <a href="{% url 'delete_user' %}" class="btn btn-danger border mt-3 rounded-3 shadow-sm" id="delete_user_button"> Delete my account</a>
             </div>
 
             <div>

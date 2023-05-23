@@ -31,7 +31,7 @@ LOGIN_URL = '/members/login_user'
 
 STATIC_URL = 'static/'
 
-dev = False
+dev = True
 
 if dev == False:
     DEBUG = False
@@ -146,3 +146,16 @@ STATIC_ROOT = '/home/louieleverett/Webpin/bookmarks_main/static/bookmarks_main'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+## SMTP Configuration
+
+# Outlook.com config:
+# 300 emails sent a day
+# 100 recipients a day
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'webpin-site@outlook.com'
+EMAIL_HOST_PASSWORD = 'ConsiderPhlebas@1224'

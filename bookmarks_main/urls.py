@@ -11,4 +11,5 @@ urlpatterns = [
     path('get_favicon', views.get_favicon, name='get_favicon'),
     path('blog', views.devblog, name='devblog'),
     path('settings', views.account_settings, name='account_settings'),
+    path('bookmark_download', views.bookmark_list_download, name='bookmark_download'),
 ]

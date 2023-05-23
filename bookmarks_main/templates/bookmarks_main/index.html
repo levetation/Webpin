@@ -29,11 +29,11 @@
         #addbutton{width: 100%;}
         #categorybar{
             margin-top: 10px;
-            width: 150px;
+            width: 270px;
         }
     }
 
-    @media (max-width:992px){
+    @media (min-width:366px) and (max-width:992px){
         #categorybar{
             width: 250px;
         }
@@ -141,23 +141,24 @@
                             <a href="{{bookmark.bookmark_address}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #264461">
                                 <div class="row p-1 mt-3 bg-white d-flex align-items-center shadow-sm border rounded-3">
 
-                                    <div class="row mt-3">
+                                    <div class="row mt-2">
                                         <div class="col-auto">
                                             <img class="img-thumbnail me-1 saved-url" src="/get_favicon?url={{bookmark.bookmark_address}}" alt=" " height="100%" width="30px" onerror="this.style.display='none'">
-                                            <span class="align-middle fw-bold">{{bookmark.bookmark_title}}</span>
+                                            <span class="align-middle fw-bold ms-1">{{bookmark.bookmark_title}}</span>
                                         </div>
                                     </div>
 
                                     {% if bookmark.bookmark_notes %}
-                                    <div class="row">
+                                    <div class="row text-dark">
                                         <div class="col-auto text-break overflow-auto">
                                             <span class="ms-1 mt-1" style="max-height:25px;">{{bookmark.bookmark_notes}}</span>
                                         </div>
                                     </div>
                                     {% endif %}
 
-                                    <div class="row-auto">
-                                            <div class="text-end">
+                                    <div class="row-auto mt-1 py-1">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="ms-1" style="color:rgb(165, 165, 165);">{{bookmark.bookmark_save_date}}</span>
                                                 <a href="{% url 'edit-bookmark' bookmark.id %}" style="color: #264461"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </div>
                                     </div>

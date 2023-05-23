@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Saved_Bookmarks
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 ## favicon imports
 from bs4 import BeautifulSoup
@@ -174,8 +175,27 @@ def account_settings(request):
 
     context['bookmarks_len'] = len(all_user_bookmarks_list)
 
+    ## delete all bookmarks button
     if request.method == 'POST' and 'delete_all_bookmarks' in request.POST:
         all_user_bookmarks.delete()
         return redirect(request.META['HTTP_REFERER'])
  
     return render(request, 'bookmarks_main/account_settings.html', context)
+
+def bookmark_list_download(request):
+    response = HttpResponse(content_type = 'text/plain')
+    response['Content-Disposition'] = 'attachment; filename=webpin_bookmarks.html'
+
+    ## delete all bookmarks
+    all_user_bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id).order_by('-bookmark_save_date')
+
+    ## checks to display button
+    all_user_bookmarks_list = []
+    for bookmark in all_user_bookmarks:
+        # write bookmarks to html code making it readable to browsers
+        all_user_bookmarks_list.append(f'<a href={bookmark.bookmark_address}>{bookmark.bookmark_title}</a><br>')
+        # all_user_bookmarks_list.append(f'<p>{bookmark.bookmark_notes}</p><br>')
+
+    response.writelines(all_user_bookmarks_list)
+    return response
+
