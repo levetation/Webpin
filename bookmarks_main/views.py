@@ -3,6 +3,7 @@ from .models import Saved_Bookmarks
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+import os
 
 ## favicon imports
 from bs4 import BeautifulSoup
@@ -54,6 +55,12 @@ def get_favicon(request):
         return HttpResponse(response.content, content_type=response.headers['Content-Type'])
     else:
         return HttpResponse(status=404)
+    
+def url_name(url):
+    url_list = url.split('/')
+    if len(url_list) >= 1:
+        fav_url = f"{url_list[2]}"
+        return fav_url
 
 @login_required(login_url="/members/login_user")
 def userhome(request):
@@ -101,6 +108,9 @@ def userhome(request):
         new_bookmark_address = request.POST['new_bookmark_address']
         new_bookmark_notes = request.POST['new_bookmark_notes']
         new_bookmark_catagory = request.POST['new_bookmark_catagory']
+
+        # set default bookmark title
+        if new_bookmark_title == '': new_bookmark_title = url_name(request.POST['new_bookmark_address'])
 
         new_bookmark = Saved_Bookmarks(
             bookmark_title = new_bookmark_title,
@@ -161,6 +171,19 @@ def contact(request):
 def devblog(request):
     return render(request, 'bookmarks_main/devblog.html', {})
 
+## handle uploaded file
+def handle_upload_file(file):
+    
+    #_, file_extension = os.path.splitext(file)  # Get the file extension
+    #if file_extension.lower() != '.html':
+    #    return []  # Return an empty list if the file extension is not .html
+
+    contents = file.read() # get contents from file
+    soup = BeautifulSoup(contents, 'html.parser') # parse through bs4
+    a_tags = soup.find_all('a') # find all <a> tags
+    urls = [link.get('href') for link in a_tags] # list of the href urls
+    return urls
+
 @login_required(login_url="/members/login_user")
 def account_settings(request):
     context = {}
@@ -170,15 +193,35 @@ def account_settings(request):
 
     ## checks to display button
     all_user_bookmarks_list = list(all_user_bookmarks)
-    # if list is > or = to 1
-    if len(all_user_bookmarks_list) >= 1: context['all_user_bookmarks_list'] = True
+    if len(all_user_bookmarks_list) >= 1: context['all_user_bookmarks_list'] = True # if list is > or = to 1
 
+    # number of user bookmarks
     context['bookmarks_len'] = len(all_user_bookmarks_list)
 
     ## delete all bookmarks button
     if request.method == 'POST' and 'delete_all_bookmarks' in request.POST:
         all_user_bookmarks.delete()
         return redirect(request.META['HTTP_REFERER'])
+    
+    ## upload bookmarks from chrome
+    if request.method == 'POST' and 'upload_bookmarks' in request.POST:
+        file = request.FILES["bookmark_file"]
+        urls = handle_upload_file(file)
+        if len(urls) == 0:
+            messages.WARNING('Failed to extract urls')
+            return redirect(request.META['HTTP_REFERER'])
+        category = 'uploaded'
+        for url in urls:
+            new_bookmark = Saved_Bookmarks(
+                bookmark_title = url_name(url),
+                bookmark_address = url,
+                bookmark_catagory = category,
+                author = request.user,
+            )
+            new_bookmark.save()
+        messages.success(request, "New bookmarks added")
+        return redirect(request.META['HTTP_REFERER'])
+        
  
     return render(request, 'bookmarks_main/account_settings.html', context)
 
@@ -198,4 +241,6 @@ def bookmark_list_download(request):
 
     response.writelines(all_user_bookmarks_list)
     return response
+
+
 

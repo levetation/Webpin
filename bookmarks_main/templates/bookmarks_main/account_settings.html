@@ -7,9 +7,9 @@
     #main-row {
         margin-top: 5%;
     }
-    #text-content{
+    /* #text-content{
         margin-top: 10%;
-    }
+    } */
 
     #settings_button{
         width: 500px;
@@ -18,30 +18,48 @@
     #delete_user_button{
         width: 500px;
     }
+    .input-group{
+        width: 500px;
+    }
 }
 #settings_button:hover:hover {
-            color: rgb(151,205,112);
+        color: rgb(151,205,112);
     }
+#inputGroupFileAddon04{
+    color: #515b63;
+}
+#inputGroupFileAddon04:hover:hover{
+    color: rgb(151,205,112);
+}
 </style>
 
-<div class="container mt-3">
+<div class="container">
 	<div class="row px-3" id="main-row">
 
         <div class="col-lg-6 col-sm-12 text-start order-lg-2" id="text-content">
             <h1 style="color: #264461">Settings.</h1>
-            <h4 class="text-muted">A few useful buttons...</h4>
-
             <p>Number of bookmarks: <span class="fw-bold" style="color:rgb(151,205,112);">{{bookmarks_len}}</span></p>
 
-            <div>
-                <button class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks (coming soon)</button>
-            </div>
+            <h4 class="text-muted mt-3">Useful Features</h4>
 
+            <!-- Upload bookmark file -->
+            <p class="text-muted">Upload bookmarks from Chrome or export from Webpin</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="file" name="bookmark_file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept=".html" required>
+                </div>
+                <button type="submit" name="upload_bookmarks" class="btn btn-white border rounded-3 shadow-sm fw-bold mt-1" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks</button>
+            </form>
+
+            <!-- Export bookmarks -->
             {% if all_user_bookmarks_list %}
-                <div>
-                    <a href="{% url 'bookmark_download' %}" class="btn btn-white border mt-3 rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-file-arrow-down"></i> Export bookmarks</a>
+                <div class="mt-3">
+                    <a href="{% url 'bookmark_download' %}" class="btn btn-white border rounded-3 shadow-sm fw-bold" id="settings_button"><i class="fa-solid fa-file-arrow-down"></i> Export bookmarks</a>
                 </div>
             {% endif %}
+
+            <legend class="border-bottom mt-3" id="legend_border" style="width: 500px;"></legend>
 
             <div>
                 <h4 class="text-muted mt-3">The Danger Zone</h4>
@@ -78,7 +96,7 @@
 
             <div>
                 <!-- <i class="fa-solid fa-user-slash"></i> -->
-                <a href="{% url 'delete_user' %}" class="btn btn-danger border mt-3 rounded-3 shadow-sm" id="delete_user_button"> Delete my account</a>
+                <a href="{% url 'delete_user' %}" class="btn btn-danger border my-3 rounded-3 shadow-sm" id="delete_user_button"> Delete my account</a>
             </div>
 
             <div>

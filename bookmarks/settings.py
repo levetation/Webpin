@@ -31,7 +31,7 @@ LOGIN_URL = '/members/login_user'
 
 STATIC_URL = 'static/'
 
-dev = False
+dev = True
 
 if dev == False:
     DEBUG = False
@@ -53,6 +53,7 @@ CACHES = {
 # Application definition
 
 INSTALLED_APPS = [
+    'notes.apps',
     'bookmarks_main.apps.BookmarksMainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -146,6 +147,12 @@ STATIC_ROOT = '/home/louieleverett/Webpin/bookmarks_main/static/bookmarks_main'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+## File upload handlers
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
 
 ## SMTP Configuration
 
