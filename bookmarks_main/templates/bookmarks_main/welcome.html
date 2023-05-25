@@ -8,6 +8,9 @@
 	#quote-area{
 		margin-top: 100px;
 	}
+	#settings_button{
+		width: 200px;
+	}
 }
 
 @media (min-width:992px) and (max-width:1200px) {
@@ -35,6 +38,9 @@
 #cards{
 	height: 180px;
 }
+#settings_button:hover:hover {
+        color: rgb(151,205,112);
+    }
 
 </style>
 
@@ -48,22 +54,57 @@
 		</div>
 		<div class="col-lg-6 col-sm-12 text-center order-lg-1">
 			<div class="row" id="quote-area">
-					<h1 class="text-start fw-bold fs-1" style="color: #264461">Save things for later.</h1>
+					<h1 class="text-start fw-bold fs-1" style="color: #264461">Bookmark things for later.</h1>
 					<p class="text-start fs-5">Instead of sending yourself links, save interesting content to your personal web archive.</p>
 				<a class="col-lg-3 col-sm-3 ms-2 mt-1 p-2 btn btn-sm rounded-3 shadow-sm fw-bold fs-6" style="background-color: rgb(151,205,112); color:white;" href="{% url 'register_user' %}">Get Started</a>
 			</div>
 		</div>
 	</div>
 
+	<!-- Features Row -->
+
+	<div class="row mt-3" id="main-row">
+		<!-- development blog card -->
+		<div class="col-lg-6 col-sm-12">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col p-4 d-flex flex-column position-static">
+				<h3 class="mb-0" style="color: #264461">Webpin Notes</h3>
+				<div class="mb-1">Store & Organise your notes with Webpin</div>
+				<a href="{% url 'notes_home' %}" class="btn btn-white border rounded-3 shadow-sm fw-bold mt-3 stretched-link" id="settings_button"><i class="fa-solid fa-plus"></i> Add notes</a>
+				</div>
+				<div class="col-auto d-none d-lg-block text-center">
+				{% load static %}
+				<img class="p-3 mt-3 me-3" src="{% static '/bookmarks_main/undraw_ideas_flow_re_bmea.svg' %}" alt="person coding" width="118px">
+				</div>
+			</div>
+		</div>
+		<!-- Twitter card -->
+		<div class="col-lg-6 col-sm-12">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col p-4 d-flex flex-column position-static">
+				<h3 class="mb-0" style="color: #264461">
+					Upload bookmarks from 
+					<span style="color:#4285F4;">G</span><span style="color:#EA4335;">o</span><span style="color:#FBBC05;">o</span><span style="color:#4285F4;">g</span><span style="color:#34A853;">l</span><span style="color:#EA4335;">e</span> Chrome
+				</h3>
+				<a href="{% url 'account_settings' %}" class="btn btn-white border rounded-3 shadow-sm fw-bold mt-3 stretched-link" id="settings_button"><i class="fa-solid fa-arrow-up"></i> Upload bookmarks</a>
+				</div>
+				<div class="col-auto d-none d-lg-block text-center">
+				{% load static %}
+				<img class="p-3 mt-1 me-3" src="{% static '/bookmarks_main/Google_Chrome_icon_(February_2022).svg' %}" alt="logo of chrome" width="162px">
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Blog Row -->
-	<div class="row py-3 my-3 border-bottom" id="main-row">
+	<div class="row pb-3 border-bottom" id="main-row">
 		<!-- development blog card -->
 		<div class="col-lg-6 col-sm-12">
 			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 			  <div class="col p-4 d-flex flex-column position-static">
 				<h3 class="mb-0" style="color: #264461">Dev blog</h3>
 				<div class="mb-1 text-muted">1st May 2023</div>
-				<p class="mb-auto">Where did Webpin come from and how is it made?</p>
+				<p class="mb-auto">The origins of Webpin.co.uk</p>
 				<a href="{% url 'devblog' %}" class="stretched-link" style="color: rgb(151,205,112); text-decoration: none;">Continue reading</a>
 			  </div>
 			  <div class="col-auto d-none d-lg-block text-center">

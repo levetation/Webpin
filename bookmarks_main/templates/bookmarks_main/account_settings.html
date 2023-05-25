@@ -21,6 +21,9 @@
     .input-group{
         width: 500px;
     }
+    #legend_border{
+        width: 500px;
+    }
 }
 #settings_button:hover:hover {
         color: rgb(151,205,112);
@@ -59,7 +62,7 @@
                 </div>
             {% endif %}
 
-            <legend class="border-bottom mt-3" id="legend_border" style="width: 500px;"></legend>
+            <legend class="border-bottom mt-3" id="legend_border"></legend>
 
             <div>
                 <h4 class="text-muted mt-3">The Danger Zone</h4>
@@ -95,7 +98,6 @@
             {% endif %}
 
             <div>
-                <!-- <i class="fa-solid fa-user-slash"></i> -->
                 <a href="{% url 'delete_user' %}" class="btn btn-danger border my-3 rounded-3 shadow-sm" id="delete_user_button"> Delete my account</a>
             </div>
 

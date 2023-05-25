@@ -173,25 +173,19 @@ def devblog(request):
 
 ## handle uploaded file
 def handle_upload_file(file):
-    
-    #_, file_extension = os.path.splitext(file)  # Get the file extension
-    #if file_extension.lower() != '.html':
-    #    return []  # Return an empty list if the file extension is not .html
-
-    contents = file.read() # get contents from file
-    soup = BeautifulSoup(contents, 'html.parser') # parse through bs4
+    contents = file.read()
+    soup = BeautifulSoup(contents, 'html.parser')
     a_tags = soup.find_all('a') # find all <a> tags
-    urls = [link.get('href') for link in a_tags] # list of the href urls
+    urls = [link.get('href') for link in a_tags]
     return urls
 
 @login_required(login_url="/members/login_user")
 def account_settings(request):
     context = {}
 
-    ## delete all bookmarks
     all_user_bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id)
 
-    ## checks to display button
+    ## checks to display 'delete bookmarks' button
     all_user_bookmarks_list = list(all_user_bookmarks)
     if len(all_user_bookmarks_list) >= 1: context['all_user_bookmarks_list'] = True # if list is > or = to 1
 
@@ -206,10 +200,20 @@ def account_settings(request):
     ## upload bookmarks from chrome
     if request.method == 'POST' and 'upload_bookmarks' in request.POST:
         file = request.FILES["bookmark_file"]
+
+        # Check the file extension
+        file_extension = os.path.splitext(file.name)[1].lower()
+        if file_extension != '.html':
+            messages.warning(request, "Invalid file format. Please upload an HTML file.")
+            return redirect(request.META['HTTP_REFERER'])
+        
         urls = handle_upload_file(file)
+        
         if len(urls) == 0:
             messages.WARNING('Failed to extract urls')
             return redirect(request.META['HTTP_REFERER'])
+        
+        # saving newly uploaded bookmarks
         category = 'uploaded'
         for url in urls:
             new_bookmark = Saved_Bookmarks(
@@ -222,7 +226,6 @@ def account_settings(request):
         messages.success(request, "New bookmarks added")
         return redirect(request.META['HTTP_REFERER'])
         
- 
     return render(request, 'bookmarks_main/account_settings.html', context)
 
 def bookmark_list_download(request):
